@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Kan du anbefale?</title>
+    <script src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="javascript/jquery-1.8.2.js" type="text/javascript" charset="utf-8"></script>
+    <script src="bootstrap/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" media="screen" title="Bootstrap" charset="utf-8">
+    
+    <script type="text/javascript" charset="utf-8">
+      var current_page = 0;
+      $(document).ready(function() {
+        $("#loadmore").on("click", function() {
+          console.log("click");
+          current_page ++;
+          $.getJSON("/api/" + current_page, function(data, text, jqxhr) {
+            var items = [];
+            $.each(data, function(key, value) {
+              items.push('<div>' + value.html + '</div>');
+            });
+            $("#tweets").append(items.join(''));
+            twttr.widgets.load();
+            if (data.length < 10) {
+              $("#loadmore").toggleClass("disabled");
+            }
+          });
+        });
+      });
+    </script>
+    
+    <style type="text/css" media="screen">
+      .center {
+        text-align: center;
+      }
+      .footer {
+        margin: 3em;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="container">
+      <div class="page-header">
+        <h1>Kan du anbefale?<small>Disse mennesker har brug for din hjælp.</small></h1>
+      </div>
+      <div id="tweets" class="row">
+        <% tweets.each do | tweet | %>
+          <div>
+            <%= tweet.html %>
+          </div>
+        <% end %>
+      </div>
+      <div class="row center">
+        <button class="btn" id="loadmore">Hent flere tweets</button>
+      </div>
+      <div class="row footer">
+        <div class="span6 center">
+          Ide og kode: Ricco Førgaard. <a href="http://twitter.com/fiskeben">Følg mig på Twitter</a>
+        </div>
+        
+      </div>
+    </div>
+    
+  </body>
+</html>
