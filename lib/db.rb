@@ -34,8 +34,8 @@ class DB
     statement.execute
   end
   
-  def get_single_value(sql)
-    @database.get_first_value(sql)
+  def get_single_value(sql, *values)
+    @database.get_first_value(sql, values)
   end
   
   def self.close

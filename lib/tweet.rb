@@ -10,8 +10,10 @@ class Tweet
   
   def save
     db = DB.get_instance
-    sql = "INSERT INTO tweets(tweet_id, html) VALUES(:id, :html)"
-    db.insert(sql, { :id => @id, :html => @html})
+    unless tweet_exists?
+      sql = "INSERT INTO tweets(tweet_id, html) VALUES(:id, :html)"
+      db.insert(sql, { :id => @id, :html => @html})
+    end
   end
   
   def to_json(*args)
@@ -28,5 +30,11 @@ class Tweet
       tweets.push tweet
     end
     tweets
+  end
+  
+  def tweet_exists?
+    db = DB.get_instance
+    sql = "SELECT count(*) FROM tweets where tweet_id = :id"
+    db.get_single_value(sql, @id) >= 1
   end
 end
