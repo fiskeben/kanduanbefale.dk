@@ -10,7 +10,7 @@ class Tweet
   
   def save
     db = DB.get_instance
-    unless tweet_exists?
+    unless incomplete?
       sql = "INSERT INTO tweets(tweet_id, html) VALUES(:id, :html)"
       db.insert(sql, { :id => @id, :html => @html})
     end
@@ -30,6 +30,10 @@ class Tweet
       tweets.push tweet
     end
     tweets
+  end
+  
+  def incomplete?
+    tweet_exists? or @id.nil? or @html.nil?
   end
   
   def tweet_exists?
