@@ -17,7 +17,7 @@ end
 
 word_search = TwitterSearch.new("http://search.twitter.com/search.json?q=%22Kan%20anbefale%22%20%3F&src=typd", "anbefale")
 word_results = word_search.execute
-puts "Handling #{word_results.inspect} results"
+puts "Handling #{word_results.length} results"
 handle_search_results word_results
 
 twitterhjerne_search = TwitterSearch.new("http://search.twitter.com/search.json?q=%23twitterhjerne&src=typd", "#twitterhjerne")
