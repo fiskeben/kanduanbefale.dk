@@ -28,4 +28,4 @@ public/assets/*
 log/*
 .rvmrc
 tweets.db
-
+public/components/
